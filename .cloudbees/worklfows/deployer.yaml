@@ -14,13 +14,13 @@ on:
 jobs:
   MyAppFE:
     if: ${{ fromJSON(inputs.manifest)['Frontend-GHA']['Frontend-GHA'].deploy }}
-    uses: gmaxey/MyAppFE/.cloudbees/workflows/deploy.yaml
+    uses: BT-Demos/My-App/.cloudbees/workflows/deployArtifact.yaml
     with:
       artifact-id: ${{ fromJSON(inputs.manifest)['Frontend-GHA']['Frontend-GHA'].id }}
       environment: ${{ inputs.environment }}
   MyAppBE:
     if: ${{ fromJSON(inputs.manifest)['Backend-CBCI']['Backend-CBCI'].deploy }}
-    uses: gmaxey/MyAppBE/.cloudbees/workflows/deploy.yaml
+    uses: BT-Demos/My-App/.cloudbees/workflows/deployArtifact.yaml
     with:
       artifact-id: ${{ fromJSON(inputs.manifest)['Backend-CBCI']['Backend-CBCI'].id }}
       environment: ${{ inputs.environment }}
