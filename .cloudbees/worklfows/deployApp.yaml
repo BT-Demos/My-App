@@ -1,0 +1,22 @@
+
+
+apiVersion: automation.cloudbees.io/v1alpha1
+kind: workflow
+name: MyApp Deploy
+on:
+  workflow_call:
+    inputs:
+      artifact-id:
+        type: string
+        required: true
+      environment:
+        type: string
+        required: true
+jobs:
+  deploy:
+    environment: ${{ inputs.environment }}
+    steps:
+      - name: Inform system that an artifact version was deployed
+        uses: cloudbees-io/register-deployed-artifact@v2
+        with:
+          artifact-id: "${{ inputs.artifact-id }}"
