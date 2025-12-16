@@ -7,15 +7,13 @@ on:
       manifest:
         type: string
         required: true
-        description: This is a system-generated parameter and is required for use in
-          application releases. Refer to
-          https://docs.cloudbees.com/docs/cloudbees-platform/latest/applications/releases#manifest
-          for the expected format
+        description: This is a system-generated parameter and is required for use in application releases. Refer to https://docs.cloudbees.com/docs/cloudbees-platform/latest/applications/releases#manifest for the expected format
 metadata:
   stages/v1alpha1:
     - name: pre-prod
       jobs:
         - pre-prod
+        - Aruna
     - name: prod
       jobs:
         - prod
@@ -27,10 +25,19 @@ jobs:
       manifest: ${{ inputs.manifest }}
       environment: ${{ job.environment }}
   prod:
-    needs:
-      - pre-prod
+    needs: Aruna
     environment: prod
     uses: ./.cloudbees/workflows/deployer.yaml
     with:
       manifest: ${{ inputs.manifest }}
       environment: ${{ job.environment }}
+  Aruna:
+    needs:
+      - pre-prod
+    timeout-minutes: 4320
+    delegates: cloudbees-io/manual-approval/custom-job.yml@v1
+    with:
+      instructions: Please can you approve this Aruna?
+      disallowLaunchByUser: false
+      notifyAllEligibleUsers: false
+      approvers: ed0b49be-49a6-11ef-94a3-42010a83ae06
