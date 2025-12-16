@@ -37,7 +37,8 @@ jobs:
     timeout-minutes: 4320
     delegates: cloudbees-io/manual-approval/custom-job.yml@v1
     with:
-      instructions: Please can you approve this Aruna?
+      instructions: |
+        Please can you approve this Aruna? Trying again
       disallowLaunchByUser: false
       notifyAllEligibleUsers: false
       approvers: ed0b49be-49a6-11ef-94a3-42010a83ae06
