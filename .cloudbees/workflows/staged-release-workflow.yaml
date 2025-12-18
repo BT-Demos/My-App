@@ -13,7 +13,7 @@ metadata:
     - name: pre-prod
       jobs:
         - pre-prod
-        - Aruna
+        - EM_approval
     - name: prod
       jobs:
         - prod
@@ -25,20 +25,21 @@ jobs:
       manifest: ${{ inputs.manifest }}
       environment: ${{ job.environment }}
   prod:
-    needs: Aruna
+    needs: EM_approval
     environment: prod
     uses: ./.cloudbees/workflows/deployer.yaml
     with:
       manifest: ${{ inputs.manifest }}
       environment: ${{ job.environment }}
-  Aruna:
+  EM_approval:
     needs:
       - pre-prod
     timeout-minutes: 4320
     delegates: cloudbees-io/manual-approval/custom-job.yml@v1
     with:
-      instructions: |
-        Please can you approve this Aruna? Trying again
+      instructions: |-
+        Hey Aruna, can you please take a look at this before moving to prod? 
+        Thanks!
       disallowLaunchByUser: false
       notifyAllEligibleUsers: false
       approvers: ed0b49be-49a6-11ef-94a3-42010a83ae06
